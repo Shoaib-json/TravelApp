@@ -1,0 +1,28 @@
+<% layout("layouts/boilerplate") -%>
+<body>
+    
+
+    <div class="container">
+        <div class="card">
+            <img src="<%= lists.image.url %>" class="card-img-top" alt="Image">
+            <div class="card-body">
+                <h5 class="card-title"><%= lists.title %></h5>
+                <p class="card-text"><%= lists.description %></p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">&#8377;<%= lists.price.toLocaleString("en-IN") %>/Night</li>
+                <li class="list-group-item"><%= lists.location %></li>
+                <li class="list-group-item"><%= lists.country %></li>
+            </ul>
+            <div class="card-footer">
+                
+
+                <button type="button" class="btn btn-outline-primary"><a href="/list/<%= lists._id %>/edit">Edit</a></button>
+                <form method="post" action="/lists/<%= lists._id %>/delete?_method=DELETE">
+                    <button type="submit">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>

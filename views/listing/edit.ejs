@@ -1,0 +1,42 @@
+<% layout("/layouts/boilerplate") -%>
+<body>
+
+
+    <form method="post" action="/list/<%=q._id%>/update?_method=PUT"  >
+        <div class="mb-3"  >
+            <label for="fileInput">Put the ImageUrl</label>
+            <input type="text" id="fileInput" name="image" value="<%=q.image.url%>">
+        </div>
+        <div class="col-md-6 col-12">
+          <label for="inputEmail4" class="form-label">Title</label> 
+          <input  class="form-control" id="inputEmail4"  value="<%=q.title%>" name = "title">
+        </div>
+        <div class="col-md-6 col-12">
+          <label for="inputPassword4" class="form-label">Price</label>
+          <input  class="form-control" id="inputPassword4" value="<%=q.price%>" name = "price">
+        </div>
+        
+        <div class="col-12">
+          <label for="inputAddress" class="form-label">Description</label>
+          <input type="text" class="form-control" id="inputAddress"  value="<%=q.description%>" name="description">
+        </div>
+        <div class="col-12">
+          <label for="inputAddress2" class="form-label">Location</label>
+          <input type="text" class="form-control" id="inputAddress2" value="<%=q.location%>" name="location">
+        </div>
+        <div class="col-md-6 col-12">
+          <label for="inputCity" class="form-label">City</label>
+          <input type="text" class="form-control" id="inputCity"  value="<%=q.country%>" name = "country">
+        </div>
+        <div class="col-md-6 col-12">
+          <label for="inputCity" class="form-label">Password</label>
+          <input type="text" class="form-control" id="inputCity"   name = "pass">
+        </div>
+       
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary w-100">Submit</button>
+        </div>
+    </form>
+      
+</body>
+</html>

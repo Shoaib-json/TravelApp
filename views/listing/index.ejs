@@ -1,0 +1,21 @@
+<% layout("/layouts/boilerplate") -%>
+<body>
+  <div class="container mt-5">
+    <div class="row">
+      <% for (let list of lists) { %>
+        <div class="col-3 mb-4"> <!-- 4 cards per row (col-3 makes each card take 3/12 of the row width) -->
+          <a href="/list/<%= list._id %>" class="text-decoration-none"> <!-- Added class for removing link underline -->
+            <div class="card h-100"> <!-- Use h-100 to make sure cards fill up the space vertically -->
+              <img src="<%= list.image.url %>" class="card-img-top" alt="Image">
+              <div class="card-body">
+                <h5 class="card-title"><%= list.title %></h5>
+                <p class="card-text"><%= list.location %></p>
+                <p>&#8377;<%= list.price.toLocaleString("en-IN") %>/night</p>
+              </div>
+            </div>
+          </a>
+        </div>
+      <% } %>
+    </div>
+  </div>
+</body>
