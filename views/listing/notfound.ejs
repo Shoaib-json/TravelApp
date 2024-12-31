@@ -1,14 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 - Not Found</title>
-</head>
-<body style="font-family: Arial, sans-serif; text-align: center; padding: 50px;">
-    <h1 style="font-size: 3em; color: #FF0000;">404</h1>
-    <p style="font-size: 1.5em;">Sorry, the page you're looking for cannot be found.</p>
-    <p>The page might have been removed or the URL is incorrect.</p>
-    <a href="/list" style="text-decoration: none; font-size: 1.2em; color: #007BFF;">Go Back Home</a>
-</body>
-</html>
+<% layout("layouts/boilerplate") -%>
+
+<div class="alert alert-dark" role="alert">
+    <p><%= message%></p>
+</div>

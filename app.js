@@ -41,7 +41,7 @@ app.get("/sign" , (req,res)=>{
     res.render("./listing/sign");
 });
 
-app.post("/sign" , async (req,res)=>{
+app.post("/sign" , async (req,res,next)=>{
     try{
         let {email,pass,name} = req.body;
         let q = await Sign.findOne({email: email});
@@ -65,10 +65,6 @@ app.post("/sign" , async (req,res)=>{
             
             
         }
-        
-
-
-    
     }catch (err){
         next(err);
     }
@@ -107,11 +103,10 @@ app.get("/terms",(req,res) =>{
     res.render("./listing/terms.ejs")
 })
 
-app.get("/search", async (req, res) => {
+app.get("/search", async (req, res,next) => {
     try {
         const { search } = req.query;
-        
-        // First, check if search parameter exists
+    
         if (!search) {
             return res.render("./listing/notfound.ejs");
         }
@@ -131,7 +126,7 @@ app.get("/search", async (req, res) => {
         res.render("./listing/index.ejs", { lists });
 
     } catch (err) {
-        console.error( err);
+        next( err);
        
     }
 });
@@ -149,10 +144,15 @@ app.get("/list/new/create",(req,res)=>{
 
 })
 
-app.post("/list/new1/submit", async (req, res) => {
+app.post("/list/new1/submit", async (req, res,next) => {
     console.log("Incoming data:", req.body); // Log incoming data
     try {
+        
         const { title, price, location, country, description, image} = req.body;
+        if (!title || !price || !location || !country || !description || !image) {
+            throw new ErrorH(400, "Enter valid Data ");}
+
+
         const lists = new List({
             title,
             description,
@@ -169,18 +169,28 @@ app.post("/list/new1/submit", async (req, res) => {
     }
 });
 
-app.get("/list/:id/edit", async(req,res)=>{
-    let {id}=req.params;
+app.get("/list/:id/edit", async(req,res,next)=>{
+    try{let {id}=req.params;
     const q = await List.findById(id);
     res.render("./listing/edit.ejs",{q})
+}catch(err){
+    next(err)
+}
+
 });
 
 
-app.put("/list/:id/update" , async (req,res)=>{
+app.put("/list/:id/update" , async (req,res,next)=>{
     try{
     let{id} = req.params;
     let {title,description,price,location,country,image} = req.body;
     let pass = req.body.pass;
+
+    // Error
+    if (!title || !price || !location || !country || !description || !image) {
+        throw new ErrorH(400, "All fields are required.");}
+
+
     if(pass == "admin"){
     let q = await List.findByIdAndUpdate(id,{
         title: title,
@@ -205,8 +215,9 @@ app.put("/list/:id/update" , async (req,res)=>{
 
 });
 
+
 // deleting the route 
-app.delete("/lists/:id/delete", async (req,res)=>{
+app.delete("/lists/:id/delete", async (req,res,next)=>{
 
     try{
     let {id} = req.params;
@@ -217,11 +228,15 @@ app.delete("/lists/:id/delete", async (req,res)=>{
     }
 });
 
+app.all("*",(req,res)=>{
+    let  message = " Page not found"
+    res.render("./listing/notfound.ejs" , {message})
+})
+
 
 app.use((err,req,res,next)=>{
-    console.log(err);
-    res.render("./listing/notfound.ejs");
-    next();
+    let{status=500 , message = "not found"} =err;
+    res.render("./listing/notfound.ejs" , {message});
 })
 
 

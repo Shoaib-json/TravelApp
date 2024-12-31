@@ -4,28 +4,28 @@
     <form method="post" action="/list/new1/submit"  >
         <div class="mb-3"  >
             <label for="fileInput">Put the ImageUrl</label>
-            <input type="text" id="fileInput" name="image" placeholder="Enter the ImageUrl">
+            <input type="text" id="fileInput" name="image" placeholder="Enter the ImageUrl" required>
         </div>
         <div class="col-md-6 col-12">
           <label for="inputEmail4" class="form-label">Title</label> 
-          <input  class="form-control" id="inputEmail4"   name = "title" placeholder="Enter the Title">
+          <input  class="form-control" id="inputEmail4"   name = "title" placeholder="Enter the Title" required>
         </div>
         <div class="col-md-6 col-12">
           <label for="inputPassword4" class="form-label">Price</label>
-          <input  class="form-control" id="inputPassword4"  name = "price" placeholder="Enter the price">
+          <input  class="form-control" id="inputPassword4"  name = "price" placeholder="Enter the price" required>
         </div>
         
         <div class="col-12">
           <label for="inputAddress" class="form-label">Description</label>
-          <input type="text" class="form-control" id="inputAddress"   name="description" >
+          <input type="text" class="form-control" id="inputAddress"   name="description" required>
         </div>
         <div class="col-12">
           <label for="inputAddress2" class="form-label">City</label>
-          <input type="text" class="form-control" id="inputAddress2"  name="location"  placeholder="Enter the city">
+          <input type="text" class="form-control" id="inputAddress2"  name="location"  placeholder="Enter the city" required>
         </div>
         <div class="col-md-6 col-12">
           <label for="inputCity" class="form-label">Country</label>
-          <input type="text" class="form-control" id="inputCity" name = "country" placeholder="Enter your country">
+          <input type="text" class="form-control" id="inputCity" name = "country" placeholder="Enter your country" required>
         </div>
         
        
@@ -34,28 +34,5 @@
         </div>
     </form>
 
-    <!-- <h2>Upload your place</h2>
-    <form method="post" action="/list/new1/submit">
-        <div class="tit">
-            <input placeholder="Title" name="title">
-        </div>
-        <div class="loc">
-            <input placeholder="Enter your image" name="image">
-        </div>
-        <div class="des">
-            <input placeholder="description" name="description">
-        </div>
-        <div class="loc">
-            <input placeholder="Enter your location" name="location">
-        </div>
-        <div class="loc">
-            <input placeholder="Enter your country" name="country">
-        </div>
-        <div class="loc">
-            <input placeholder="Enter your prize" name="price">
-        </div>
-
-        <button name="submit">Submit</button>
-    </form>
-     -->
+   
 </body>
