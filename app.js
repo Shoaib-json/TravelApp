@@ -5,8 +5,10 @@ const List = require("./models/listing");
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
-const ErrorH = require("./error");
+const ErrorH = require("./utils/error");
 const Sign = require("./models/login");
+const {ListSchema} = require("./utils/schema");
+
 
 app.set('view engine','ejs');
 app.set('views',path.join(__dirname,'views'));
@@ -30,8 +32,24 @@ app.use((req,res,next)=>{
     req.date = new Date();
     console.log(req.date,req.method , req.path);
     next();
-})
+});
 
+const valList = (req, res, next) => {
+    const listingData = {
+        listing: {
+            ...req.body,
+            price: parseInt(req.body.price, 10)
+        }
+    };
+    let { error } = ListSchema.validate(listingData);
+    console.log(error);
+
+    if(error) {
+        throw new ErrorH(400, error);
+    } else {
+        next();
+    }
+}
 
 app.get("/" , (req,res)=>{
     res.render("./listing/login.ejs");
@@ -118,7 +136,7 @@ app.get("/search", async (req, res,next) => {
             ]
         });
 
-        // Proper way to check for empty results
+        
         if (!lists || lists.length === 0) {
             return res.render("./listing/notfound.ejs");
         }
@@ -144,19 +162,14 @@ app.get("/list/new/create",(req,res)=>{
 
 })
 
-app.post("/list/new1/submit", async (req, res,next) => {
+app.post("/list/new1/submit",valList , async (req, res,next) => {
     console.log("Incoming data:", req.body); // Log incoming data
     try {
-        
         const { title, price, location, country, description, image} = req.body;
-        if (!title || !price || !location || !country || !description || !image) {
-            throw new ErrorH(400, "Enter valid Data ");}
-
-
         const lists = new List({
             title,
             description,
-            price,
+            price : parseInt(req.body.price, 10) ,
             image: { filename: "image", url: image },
             location,
             country,
@@ -180,16 +193,11 @@ app.get("/list/:id/edit", async(req,res,next)=>{
 });
 
 
-app.put("/list/:id/update" , async (req,res,next)=>{
+app.put("/list/:id/update" , valList ,async (req,res,next)=>{
     try{
     let{id} = req.params;
     let {title,description,price,location,country,image} = req.body;
     let pass = req.body.pass;
-
-    // Error
-    if (!title || !price || !location || !country || !description || !image) {
-        throw new ErrorH(400, "All fields are required.");}
-
 
     if(pass == "admin"){
     let q = await List.findByIdAndUpdate(id,{
