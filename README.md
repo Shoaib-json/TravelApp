@@ -79,7 +79,6 @@ npm start       # Production
 ## Project Structure
 ```
 triptale/
-├── controllers/         # Business logic
 ├── models/             # Database schemas
 ├── routes/             # API routes
 ├── middleware/         # Custom middleware
