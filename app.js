@@ -8,6 +8,8 @@ const ejsMate = require("ejs-mate");
 const ErrorH = require("./utils/error");
 const Sign = require("./models/login");
 const {ListSchema} = require("./utils/schema");
+const Review = require("./models/review");
+const {revSch} = require("./utils/schema");
 
 
 app.set('view engine','ejs');
@@ -37,7 +39,7 @@ app.use((req,res,next)=>{
 const valList = (req, res, next) => {
     const listingData = {
         listing: {
-            ...req.body,
+            ...req.body,    
             price: parseInt(req.body.price, 10)
         }
     };
@@ -50,6 +52,16 @@ const valList = (req, res, next) => {
         next();
     }
 }
+// const rush = (req,res,next)=>{
+//     let { error } = revSch.validate(req.body);
+//     if(error) {
+//         throw new ErrorH(400, error);
+//     } else {
+//         next();
+//     }
+// }
+
+
 
 app.get("/" , (req,res)=>{
     res.render("./listing/login.ejs");
@@ -151,7 +163,7 @@ app.get("/search", async (req, res,next) => {
 
 app.get("/list/:id", async (req,res)=>{
     let {id} = req.params;
-    const lists = await List.findById(id);
+    const lists = await List.findById(id).populate("reviews");
     res.render("./listing/show.ejs" , {lists});
 });
 
@@ -163,7 +175,7 @@ app.get("/list/new/create",(req,res)=>{
 })
 
 app.post("/list/new1/submit",valList , async (req, res,next) => {
-    console.log("Incoming data:", req.body); // Log incoming data
+    console.log("Incoming data:", req.body); 
     try {
         const { title, price, location, country, description, image} = req.body;
         const lists = new List({
@@ -236,6 +248,50 @@ app.delete("/lists/:id/delete", async (req,res,next)=>{
     }
 });
 
+//review
+app.post("/lists/:id/review" ,async (req,res,next)=>{
+    try{
+    
+    let {rating,comment} = req.body;
+    
+    const q =  new Review({
+        comment : comment,
+        rating : rating
+    });
+    await q.save();
+    let lists = await List.findById(req.params.id);
+    if(!lists){
+        return res.status(404).send("List not found");
+    }
+    lists.reviews.push(q);
+    await lists.save();
+    console.log(lists);
+    console.log(q);
+    res.redirect(`/list/${req.params.id}`);
+    // res.render("./listing/show.ejs",{lists})
+
+    }catch{ ((err) => {
+        next(err);
+    });}
+})
+
+app.delete("/list/:id/review/:reviewId",async(req,res)=>{
+    try{let {id , reviewId}= req.params;
+    await List.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
+
+    let a = await Review.findByIdAndDelete(reviewId);
+    console.log(a)
+
+    res.redirect(`/list/${id}`);
+    }catch (err){
+        next(err)
+    }
+
+}
+)
+
+
+
 app.all("*",(req,res)=>{
     let  message = " Page not found"
     res.render("./listing/notfound.ejs" , {message})
@@ -243,7 +299,7 @@ app.all("*",(req,res)=>{
 
 
 app.use((err,req,res,next)=>{
-    let{status=500 , message = "not found"} =err;
+    let{status=500 , message = "not found"} = err;
     res.render("./listing/notfound.ejs" , {message});
 })
 

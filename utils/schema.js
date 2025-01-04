@@ -10,3 +10,12 @@ module.exports.ListSchema = Joi.object({
         image : Joi.string().required()
     }).unknown(true),
 })
+
+module.exports.revSch = Joi.object({
+    review : Joi.object({
+        comment : Joi.string().required().min(5),
+        
+        
+        
+    }).unknown(true),
+})

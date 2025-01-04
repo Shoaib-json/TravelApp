@@ -1,3 +1,14 @@
+/* Base Styles */
+body {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  background-color: #f7f7f7;
+  margin: 0;
+  padding: 0;
+  color: #333;
+  margin-top: 80px;
+}
+
+/* Navigation */
 .navbar {
   position: fixed;
   top: 0;
@@ -5,10 +16,6 @@
   z-index: 1030;
   height: 80px;
   padding: 20px 30px;
-}
-
-body {
-  margin-top: 100px;
 }
 
 .navbar-brand {
@@ -60,6 +67,7 @@ body {
   font-size: 1.5rem;
 }
 
+/* Dropdown Styles */
 .dropdown-menu {
   border-radius: 0.5rem;
   overflow: hidden;
@@ -75,26 +83,60 @@ body {
   background-color: #f8f9fa;
 }
 
-@media (max-width: 768px) {
-  .navbar .form-control {
-    max-width: 300px;
-    height: 45px;
-  }
-  
-  .navbar {
-    height: auto;
-    padding: 15px 20px;
-  }
-  
-  .navbar-nav {
-    padding: 10px 0;
-  }
-  
-  .nav-link {
-    padding: 12px 0;
-  }
+/* Container and Card Styles */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px;
+  min-height: calc(100vh - 80px);
+  margin-top: 0;
+  gap: 1rem;
+  background-color: #f8f9fa;
 }
 
+.card {
+  width: 100%;
+  max-width: 600px;
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  margin: 10px;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card-img-top {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.card-body {
+  padding: 1.25rem;
+  background-color: white;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #2d3436;
+  margin-bottom: 0.75rem;
+}
+
+.card-text {
+  color: #636e72;
+  font-size: 0.95rem;
+  margin-bottom: 0.75rem;
+}
+
+/* Footer Styles */
 footer {
   background-color: #f7f7f7;
   padding: 2rem 0;
@@ -152,90 +194,141 @@ footer {
   color: #ff385c;
 }
 
+/* Review Section Styles */
+.review-section {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.review-form h2 {
+  margin: 0 0 1.5rem 0;
+  color: #2c3e50;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #2c3e50;
+  font-weight: 500;
+}
+
+.rating-slider {
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+.review-comment {
+  width: 100%;
+  min-height: 100px;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+/* Button Styles */
+.btn {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.btn-submit {
+  background-color: #2ecc71;
+  color: white;
+}
+
+.btn-submit:hover {
+  background-color: #27ae60;
+}
+
+.btn-edit {
+  background-color: #3498db;
+  color: white;
+}
+
+.btn-edit:hover {
+  background-color: #2980b9;
+}
+
+.btn-delete {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.btn-delete:hover {
+  background-color: #c0392b;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
+  .navbar {
+    height: auto;
+    padding: 15px 20px;
+  }
+  
+  .navbar .form-control {
+    max-width: 300px;
+    height: 45px;
+  }
+  
+  .navbar-nav {
+    padding: 10px 0;
+  }
+  
+  .nav-link {
+    padding: 12px 0;
+  }
+  
   .f-info {
     flex-direction: column;
     text-align: center;
     gap: 1.5rem;
   }
-
+  
   .f-info-links {
     flex-direction: column;
     gap: 1rem;
   }
-
+  
   .social {
     margin-bottom: 1rem;
   }
-}
-
-.container {
-  padding: 2rem;
-  gap: 1.5rem;
-  background-color: #f8f9fa;
-  margin-top: 100px;
-}
-
-.card {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border: none;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-  text-decoration: none;
-  margin: 10px;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
-}
-
-.card-img-top {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  object-position: center;
-}
-
-.card-body {
-  padding: 1.25rem;
-  background-color: white;
-}
-
-.card-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #2d3436;
-  margin-bottom: 0.75rem;
-}
-
-.card-text {
-  color: #636e72;
-  font-size: 0.95rem;
-  margin-bottom: 0.75rem;
-}
-
-p {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #2d3436;
-  margin-bottom: 0;
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-@media (max-width: 768px) {
+  
   .container {
     padding: 1rem;
-    gap: 1rem;
   }
-
+  
   .card {
     width: calc(50% - 2rem) !important;
+  }
+  
+  .listing-image {
+    height: 300px;
+  }
+  
+  .listing-title {
+    font-size: 1.5rem;
+  }
+  
+  .listing-actions {
+    flex-direction: column;
+  }
+  
+  .btn {
+    width: 100%;
+    text-align: center;
   }
 }
 
@@ -244,128 +337,3 @@ a {
     width: 100% !important;
   }
 }
-
-body {
-  font-family: 'Helvetica Neue', Arial, sans-serif;
-  background-color: #f7f7f7;
-  margin: 0;
-  padding: 0;
-  color: #333;
-}
-
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  min-height: 100vh;
-}
-
-.card {
-  width: 100%;
-  max-width: 600px;
-  background-color: #fff;
-  border-radius: 15px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-}
-
-.list-group-item {
-  font-size: 1rem;
-  background-color: #f9f9f9;
-  padding: 10px 15px;
-  border: none;
-}
-
-.card-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.card-footer button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.card-footer button:hover {
-  background-color: #0056b3;
-}
-
-.card-footer button a {
-  color: white;
-  text-decoration: none;
-}
-
-.card-footer form button {
-  background-color: #dc3545;
-}
-
-.card-footer form button:hover {
-  background-color: #b52a34;
-}
-
-.card-footer form button a {
-  color: white;
-  text-decoration: none;
-}
-
-.card-footer .price {
-  font-size: 1.2rem;
-  font-weight: bold;
-}
-
-.navbar {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1030;
-  height: 80px;
-  padding: 20px 30px;
-}
-
-body {
-  margin-top: 90px;
-}
-
-.container {
-  padding: 1.5rem;
-  gap: 1rem;
-  background-color: #f8f9fa;
-  margin-top: 0;
-}
-
-body {
-  font-family: 'Helvetica Neue', Arial, sans-serif;
-  background-color: #f7f7f7;
-  margin: 0;
-  padding: 0;
-  color: #333;
-  margin-top: 80px;
-}
-
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 20px;
-  min-height: calc(100vh - 80px);
-  margin-top: 0;
-}
-
-.card {
-  width: 100%;
-  max-width: 600px;
-  background-color: #fff;
-  border-radius: 15px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-}
-

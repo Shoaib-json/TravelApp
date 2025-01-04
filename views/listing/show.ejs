@@ -1,28 +1,68 @@
-<% layout("layouts/boilerplate") -%>
-<body>
-    
+<!-- views/lists/show.ejs -->
+<% layout("layouts/boilerplate") %>
+<div class="listing-container">
+    <!-- Listing Card -->
+    <div class="listing-card">
+        <img src="<%= lists.image.url %>" class="listing-image" alt="Property Image">
+        
+        <div class="listing-details">
+            <h1 class="listing-title"><%= lists.title %></h1>
+            <p class="listing-description"><%= lists.description %></p>
+        </div>
 
-    <div class="container">
-        <div class="card">
-            <img src="<%= lists.image.url %>" class="card-img-top" alt="Image">
-            <div class="card-body">
-                <h5 class="card-title"><%= lists.title %></h5>
-                <p class="card-text"><%= lists.description %></p>
-            </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">&#8377;<%= lists.price.toLocaleString("en-IN") %>/Night</li>
-                <li class="list-group-item"><%= lists.location %></li>
-                <li class="list-group-item"><%= lists.country %></li>
-            </ul>
-            <div class="card-footer">
-                
+        <ul class="listing-info">
+            <li>&#8377;<%= lists.price.toLocaleString("en-IN") %>/Night</li>
+            <li><%= lists.location %></li>
+            <li><%= lists.country %></li>
+        </ul>
 
-                <button type="button" class="btn btn-outline-primary"><a href="/list/<%= lists._id %>/edit">Edit</a></button>
-                <form method="post" action="/lists/<%= lists._id %>/delete?_method=DELETE">
-                    <button type="submit">Delete</button>
-                </form>
-            </div>
+        <div class="listing-actions">
+            <a href="/list/<%= lists._id %>/edit" class="btn btn-edit">Edit</a>
+            <form method="post" action="/lists/<%= lists._id %>/delete?_method=DELETE" class="delete-form">
+                <button type="submit" class="btn btn-delete">Delete</button>
+            </form>
         </div>
     </div>
 
-</body>
+    <!-- Review Form -->
+    <div class="review-section">
+        <form method="post" action="/lists/<%= lists._id %>/review" class="review-form">
+            <h2>Leave a Review</h2>
+            
+            <div class="form-group">
+                <label for="rating">Rating</label>
+                <input type="range" min="1" max="5" name="rating" id="rating" class="rating-slider">
+                <div class="rating-value"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="comment">Comment</label>
+                <textarea name="comment" id="comment" required class="review-comment"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-submit">Submit Review</button>
+        </form>
+    </div>
+
+    <!-- Reviews List -->
+    <div class="reviews-list">
+        <h2>Reviews</h2>
+        <% if (lists.reviews && lists.reviews.length > 0) { %>
+            <ul>
+                <% for (let review of lists.reviews) { %>
+                    <li class="review-item">
+                        <div class="review-content">
+                            <div class="review-rating">Rating: <%= review.rating %> ★</div>
+                            <div class="review-comment">Comment: <%= review.comment %></div>
+                        </div>
+                        <form method="POST" action="/list/<%= lists._id %>/review/<%= review._id %>?_method=DELETE" class="review-delete-form">
+                            <button type="submit" class="btn btn-delete-review">Delete Review</button>
+                        </form>
+                    </li>
+                <% } %>
+            </ul>
+        <% } else { %>
+            <p class="no-reviews">No reviews yet</p>
+        <% } %>
+    </div>
+</div>
