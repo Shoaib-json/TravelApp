@@ -26,6 +26,99 @@ const valList = (req, res, next) => {
         next();
     }
 }
+router.get("/log" , (req,res)=>{
+    res.render("./listing/login.ejs");
+});
+
+router.get("/sign" , (req,res)=>{
+    res.render("./listing/sign");
+});
+
+router.post("/sign" , async (req,res,next)=>{
+    try{
+        let {email,pass,name} = req.body;
+        let q = await Sign.findOne({email: email});
+        
+        if (q && q.email === email) {
+            res.redirect("/sign");
+        } else {
+            let p = new Sign({
+                email : email,
+                name : name,
+                password : pass
+            });
+            
+            p.save().then((res)=>{
+                console.log(res);
+            }).catch((err)=>{
+                console.log(err);
+            });
+    
+            res.redirect("/list");
+            
+            
+        }
+    }catch (err){
+        next(err);
+    }
+})
+
+
+
+router.post("/login", async (req, res, next) => {
+    try {
+        let email = req.body.email;
+        let password = req.body.password;
+        let q = await Sign.findOne({email: email});
+        
+        if (q && q.password === password) {
+            res.redirect("/list");
+        } else {
+            
+            res.render("./listing/login.ejs")
+        }
+    } catch(err) {
+        next(err);
+    }
+});
+
+
+
+router.get("/privacy",(req,res) =>{
+    res.render("./listing/privacy.ejs")
+})
+
+router.get("/terms",(req,res) =>{
+    res.render("./listing/terms.ejs")
+})
+
+router.get("/search", async (req, res,next) => {
+    try {
+        const { search } = req.query;
+    
+        if (!search) {
+            return res.render("./listing/notfound.ejs");
+        }
+
+        const lists = await List.find({
+            $or: [
+                { location: { $regex: search, $options: "i" } },
+                { country: { $regex: search, $options: "i" } }
+            ]
+        });
+
+        
+        if (!lists || lists.length === 0) {
+            return res.render("./listing/notfound.ejs");
+        }
+
+        res.render("./listing/index.ejs", { lists });
+
+    } catch (err) {
+        next( err);
+       
+    }
+});
 router.post("/new1/submit",valList , async (req, res,next) => {
     console.log("Incoming data:", req.body); 
     try {
