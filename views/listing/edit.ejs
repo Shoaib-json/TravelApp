@@ -2,7 +2,7 @@
 <body>
 
 
-    <form method="post" action="/list/<%=q._id%>/update?_method=PUT"  >
+    <form method="post" action="/<%=q._id%>/update?_method=PUT"  >
         <div class="mb-3"  >
             <label for="fileInput">Put the ImageUrl</label>
             <input type="text" id="fileInput" name="image" value="<%=q.image.url%>">

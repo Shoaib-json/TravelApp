@@ -25,7 +25,6 @@ TripTale enables property owners to list their spaces and travelers to discover 
 - **Backend**: Node.js, Express.js
 - **Database**: MongoDB with Mongoose ODM
 - **Frontend**: EJS, Bootstrap
-- **Authentication**: Custom JWT implementation
 - **Validation**: Custom schema validation
 
 ## API Documentation
@@ -77,14 +76,23 @@ npm start       # Production
 ```
 
 ## Project Structure
-```
-triptale/
-├── models/             # Database schemas
-├── routes/             # API routes
-├── middleware/         # Custom middleware
-├── views/             # EJS templates
-├── public/            # Static assets
-└── config/            # Configuration files
+
+TRAVELAPP/
+├── init/
+│   ├── index.js
+│   └── init.js
+├── models/
+│   ├── listing.js
+│   ├── login.js
+│   └── review.js
+├── utils/
+│   ├── error.js
+│   └── schema.js
+├── views/
+├── public/
+│   └── css/
+│       └── style.css
+└── app.js
 ```
 
 ## Contributing

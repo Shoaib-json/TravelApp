@@ -11,6 +11,8 @@ const {ListSchema} = require("./utils/schema");
 const Review = require("./models/review");
 const {revSch} = require("./utils/schema");
 
+const list = require("./routes/list")
+
 
 app.set('view engine','ejs');
 app.set('views',path.join(__dirname,'views'));
@@ -36,22 +38,9 @@ app.use((req,res,next)=>{
     next();
 });
 
-const valList = (req, res, next) => {
-    const listingData = {
-        listing: {
-            ...req.body,    
-            price: parseInt(req.body.price, 10)
-        }
-    };
-    let { error } = ListSchema.validate(listingData);
-    console.log(error);
+app.use("/", list);
 
-    if(error) {
-        throw new ErrorH(400, error);
-    } else {
-        next();
-    }
-}
+
 // const rush = (req,res,next)=>{
 //     let { error } = revSch.validate(req.body);
 //     if(error) {
@@ -120,10 +109,6 @@ app.post("/login", async (req, res, next) => {
 });
 
 
-app.get("/list",async (req,res) =>{
-    const lists = await List.find();
-    res.render("./listing/index.ejs",{lists});
-});
 
 app.get("/privacy",(req,res) =>{
     res.render("./listing/privacy.ejs")
@@ -161,134 +146,6 @@ app.get("/search", async (req, res,next) => {
     }
 });
 
-app.get("/list/:id", async (req,res)=>{
-    let {id} = req.params;
-    const lists = await List.findById(id).populate("reviews");
-    res.render("./listing/show.ejs" , {lists});
-});
-
-// creating new user
-app.get("/list/new/create",(req,res)=>{
-
-    res.render("./listing/new.ejs");
-
-})
-
-app.post("/list/new1/submit",valList , async (req, res,next) => {
-    console.log("Incoming data:", req.body); 
-    try {
-        const { title, price, location, country, description, image} = req.body;
-        const lists = new List({
-            title,
-            description,
-            price : parseInt(req.body.price, 10) ,
-            image: { filename: "image", url: image },
-            location,
-            country,
-        }); 
-        await lists.save();
-        console.log("Data saved:", lists);
-        res.render("./listing/show.ejs",{lists});
-    } catch (err) {
-        next(err);
-    }
-});
-
-app.get("/list/:id/edit", async(req,res,next)=>{
-    try{let {id}=req.params;
-    const q = await List.findById(id);
-    res.render("./listing/edit.ejs",{q})
-}catch(err){
-    next(err)
-}
-
-});
-
-
-app.put("/list/:id/update" , valList ,async (req,res,next)=>{
-    try{
-    let{id} = req.params;
-    let {title,description,price,location,country,image} = req.body;
-    let pass = req.body.pass;
-
-    if(pass == "admin"){
-    let q = await List.findByIdAndUpdate(id,{
-        title: title,
-        price : price,
-        image : {
-            filename : 'image456',
-            url : image
-        },
-        description : description,
-        location : location,
-        country : country
-    },{runValidators:true,new:true});
-    console.log(q);
-    let lists = q;
-    res.render("./listing/show.ejs",{lists})}
-    else{
-        res.render("./listing/notfound.ejs")
-    }
-    }catch(err){
-        next(err)
-    }
-
-});
-
-
-// deleting the route 
-app.delete("/lists/:id/delete", async (req,res,next)=>{
-
-    try{
-    let {id} = req.params;
-    let q = await List.findByIdAndDelete(id);
-    res.redirect("/list");
-    }catch{
-        next(err);
-    }
-});
-
-//review
-app.post("/lists/:id/review" ,async (req,res,next)=>{
-    try{
-    
-    let {rating,comment} = req.body;
-    
-    const q =  new Review({
-        comment : comment,
-        rating : rating
-    });
-    await q.save();
-    let lists = await List.findById(req.params.id);
-    if(!lists){
-        return res.status(404).send("List not found");
-    }
-    lists.reviews.push(q);
-    await lists.save();
-    console.log(lists);
-    console.log(q);
-    res.redirect(`/list/${req.params.id}`);
-    // res.render("./listing/show.ejs",{lists})
-
-    }catch{ ((err) => {
-        next(err);
-    });}
-})
-
-app.delete("/list/:id/review/:reviewId",async(req,res)=>{
-    try{let {id , reviewId}= req.params;
-    await List.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
-
-    let a = await Review.findByIdAndDelete(reviewId);
-    console.log(a)
-
-    res.redirect(`/list/${id}`);
-    }catch (err){
-        next(err)
-    }
-
-}
-)
 
 
 

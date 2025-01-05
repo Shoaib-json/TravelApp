@@ -17,8 +17,8 @@
         </ul>
 
         <div class="listing-actions">
-            <a href="/list/<%= lists._id %>/edit" class="btn btn-edit">Edit</a>
-            <form method="post" action="/lists/<%= lists._id %>/delete?_method=DELETE" class="delete-form">
+            <a href="/<%= lists._id %>/edit" class="btn btn-edit">Edit</a>
+            <form method="post" action="/<%= lists._id %>/delete?_method=DELETE" class="delete-form">
                 <button type="submit" class="btn btn-delete">Delete</button>
             </form>
         </div>
@@ -26,7 +26,7 @@
 
     <!-- Review Form -->
     <div class="review-section">
-        <form method="post" action="/lists/<%= lists._id %>/review" class="review-form">
+        <form method="post" action="/<%= lists._id %>/review" class="review-form">
             <h2>Leave a Review</h2>
             
             <div class="form-group">
@@ -55,7 +55,7 @@
                             <div class="review-rating">Rating: <%= review.rating %> ★</div>
                             <div class="review-comment">Comment: <%= review.comment %></div>
                         </div>
-                        <form method="POST" action="/list/<%= lists._id %>/review/<%= review._id %>?_method=DELETE" class="review-delete-form">
+                        <form method="POST" action="/<%= lists._id %>/review/<%= review._id %>?_method=DELETE" class="review-delete-form">
                             <button type="submit" class="btn btn-delete-review">Delete Review</button>
                         </form>
                     </li>
