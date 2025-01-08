@@ -6,12 +6,22 @@ const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const ErrorH = require("./utils/error");
-const Sign = require("./models/login");
 const {ListSchema} = require("./utils/schema");
 const Review = require("./models/review");
 const {revSch} = require("./utils/schema");
+const flash = require('connect-flash');
+const session = require("express-session");
+const User = require("./models/login");
+const passport = require("passport");
+const localPass = require("passport-local").Strategy;
 
-const list = require("./routes/list")
+
+
+const pist = require("./routes/list.js");
+const review = require("./routes/reviews.js");
+const user = require("./routes/login.js")
+ 
+
 
 
 app.set('view engine','ejs');
@@ -38,21 +48,36 @@ app.use((req,res,next)=>{
     next();
 });
 
-app.use("/", list);
+const sessionOpp = {
+    secret : "truck",
+    resave : false,
+    saveUninitialized: true,
+    cookie :{
+        expires : Date.now() +7*24*60*60*1000,
+        maxAge : 7*24*60*60*1000,
+        httpOnly : true
+    }
+};
+
+app.use(session(sessionOpp));
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new localPass(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+app.use((req,res,next)=>{
+    res.locals.success = req.flash("success");
+    res.locals.Error = req.flash("Error");
+    next();
+})
 
 
-// const rush = (req,res,next)=>{
-//     let { error } = revSch.validate(req.body);
-//     if(error) {
-//         throw new ErrorH(400, error);
-//     } else {
-//         next();
-//     }
-// }
-
-
-
-
+app.use("/user" , user);
+app.use("/re", review );
+app.use("/", pist);
 
 
 

@@ -1,0 +1,7 @@
+
+<% if ((success && typeof success === 'string' && success.trim().length > 0) || (Error && typeof Error === 'string' && Error.trim().length > 0)) { %>
+    <div class="alert alert-dismissible fade show <%= success ? 'alert-warning' : 'alert-danger' %>" role="alert">
+        <center><strong><%= success || Error %></strong></center>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+<% } %>

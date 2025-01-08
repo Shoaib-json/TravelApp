@@ -2,11 +2,12 @@
 const express = require('express');
 const router = express.Router();
 const List = require("../models/listing");
-const ErrorH = require("../utils/error");
-const Sign = require("../models/login");
+const ErrorH = require("../utils/error");    
 const {ListSchema} = require("../utils/schema");
 const Review = require("../models/review");
 const {revSch} = require("../utils/schema");
+const User = require("../models/login");
+const passport = require('passport');
 
 
 
@@ -25,63 +26,16 @@ const valList = (req, res, next) => {
     } else {
         next();
     }
-}
-router.get("/log" , (req,res)=>{
-    res.render("./listing/login.ejs");
-});
+};
+router.get('/favicon.ico', (req, res) => res.status(204).end());
 
-router.get("/sign" , (req,res)=>{
-    res.render("./listing/sign");
-});
 
-router.post("/sign" , async (req,res,next)=>{
-    try{
-        let {email,pass,name} = req.body;
-        let q = await Sign.findOne({email: email});
-        
-        if (q && q.email === email) {
-            res.redirect("/sign");
-        } else {
-            let p = new Sign({
-                email : email,
-                name : name,
-                password : pass
-            });
-            
-            p.save().then((res)=>{
-                console.log(res);
-            }).catch((err)=>{
-                console.log(err);
-            });
-    
-            res.redirect("/list");
-            
-            
-        }
-    }catch (err){
-        next(err);
-    }
+// creating new user
+router.get("/new/create",(req,res)=>{
+
+    res.render("./listing/new.ejs");
+
 })
-
-
-
-router.post("/login", async (req, res, next) => {
-    try {
-        let email = req.body.email;
-        let password = req.body.password;
-        let q = await Sign.findOne({email: email});
-        
-        if (q && q.password === password) {
-            res.redirect("/list");
-        } else {
-            
-            res.render("./listing/login.ejs")
-        }
-    } catch(err) {
-        next(err);
-    }
-});
-
 
 
 router.get("/privacy",(req,res) =>{
@@ -120,7 +74,7 @@ router.get("/search", async (req, res,next) => {
     }
 });
 router.post("/new1/submit",valList , async (req, res,next) => {
-    console.log("Incoming data:", req.body); 
+    
     try {
         const { title, price, location, country, description, image} = req.body;
         const lists = new List({
@@ -132,8 +86,9 @@ router.post("/new1/submit",valList , async (req, res,next) => {
             country,
         }); 
         await lists.save();
+        req.flash("success" , " Place published");
+        res.redirect(`/${lists._id}`); 
         console.log("Data saved:", lists);
-        res.render("./listing/show.ejs",{lists});
     } catch (err) {
         next(err);
     }
@@ -150,12 +105,7 @@ router.get("/:id", async (req,res)=>{
     res.render("./listing/show.ejs" , {lists});
 });
 
-// creating new user
-router.get("/new/create",(req,res)=>{
 
-    res.render("./listing/new.ejs");
-
-})
 
 
 router.get("/:id/edit", async(req,res,next)=>{
@@ -189,7 +139,8 @@ router.put("/:id/update" , valList ,async (req,res,next)=>{
     },{runValidators:true,new:true});
     console.log(q);
     let lists = q;
-    res.render("./listing/show.ejs",{lists})}
+    req.flash("success" , "place updated");
+    res.redirect("/")}
     else{
         res.render("./listing/notfound.ejs")
     }
@@ -206,7 +157,9 @@ router.delete("/:id/delete", async (req,res,next)=>{
     try{
     let {id} = req.params;
     let q = await List.findByIdAndDelete(id);
+    req.flash("Error" , "Deleted");
     res.redirect("/");
+    
     }catch {
         next(err);
     }
@@ -231,6 +184,7 @@ router.post("/:id/review" ,async (req,res,next)=>{
     await lists.save();
     console.log(lists);
     console.log(q);
+    req.flash("success" , "Created");
     res.redirect(`/${req.params.id}`);
     // res.render("./listing/show.ejs",{lists})
 
@@ -245,7 +199,7 @@ router.delete("/:id/review/:reviewId",async(req,res)=>{
 
     let a = await Review.findByIdAndDelete(reviewId);
     console.log(a)
-
+    req.flash("success" , "deleted");
     res.redirect(`/${id}`);
     }catch (err){
         next(err)
@@ -253,5 +207,10 @@ router.delete("/:id/review/:reviewId",async(req,res)=>{
 
 }
 )
+
+router.all("*",(req,res)=>{
+    let  message = " Page not found"
+    res.render("./listing/notfound.ejs" , {message})
+})
 
 module.exports = router;

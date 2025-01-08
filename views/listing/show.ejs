@@ -1,7 +1,8 @@
 <!-- views/lists/show.ejs -->
 <% layout("layouts/boilerplate") %>
+
 <div class="listing-container">
-    <!-- Listing Card -->
+    
     <div class="listing-card">
         <img src="<%= lists.image.url %>" class="listing-image" alt="Property Image">
         
@@ -26,7 +27,7 @@
 
     <!-- Review Form -->
     <div class="review-section">
-        <form method="post" action="/<%= lists._id %>/review" class="review-form">
+        <form method="post" action="/re/<%= lists._id %>/review" class="review-form">
             <h2>Leave a Review</h2>
             
             <div class="form-group">
@@ -55,7 +56,7 @@
                             <div class="review-rating">Rating: <%= review.rating %> ★</div>
                             <div class="review-comment">Comment: <%= review.comment %></div>
                         </div>
-                        <form method="POST" action="/<%= lists._id %>/review/<%= review._id %>?_method=DELETE" class="review-delete-form">
+                        <form method="POST" action="/re/<%= lists._id %>/review/<%= review._id %>?_method=DELETE" class="review-delete-form">
                             <button type="submit" class="btn btn-delete-review">Delete Review</button>
                         </form>
                     </li>
