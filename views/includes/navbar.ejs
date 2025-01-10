@@ -1,49 +1,52 @@
-
-
 <nav class="navbar navbar-expand-lg bg-white shadow-sm py-2">
-    <div class="container-fluid">
-      
+  <div class="container-fluid">
       <a class="navbar-brand d-flex align-items-center" href="/">
-        <i class="fa-regular fa-compass"></i>
-        <h4>TripTale</h4>
+          <i class="fa-regular fa-compass me-2"></i>
+          <h4 class="mb-0">TripTale</h4>
       </a>
-  
-      
-      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-  
-      
-      <div class="collapse navbar-collapse" id="navbarNav">
-        
-        <div class="mx-auto d-flex align-items-center">
-          <form class="d-flex border rounded-pill shadow-sm" style="max-width: 500px; width: 100%;" method="get" action="/search">
-            <input class="form-control border-0 rounded-pill ps-3" type="text" placeholder="Start your search" aria-label="Search" name="search">
-            <button class="btn btn-light border-0 rounded-pill" type="submit">
-              <i class="bi bi-search"></i>
-            </button>
-          </form>
-        </div>
-  
-        
-        <div class="navbar-nav ms-auto d-flex align-items-center">
-          
-          <a class="nav-link text-dark fw-semibold me-3" href="/new/create" style="white-space: nowrap;">Become a Host</a>
-          <a class="nav-link text-dark fw-semibold me-3" href="/" style="white-space: nowrap;">List</a>
 
-          
-  
-         
-          <a class="nav-link text-dark me-3" href="#">
-            <i class="bi bi-globe fs-5"></i>
-          </a>
-  
-          
-          
-            
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+          <div class="mx-auto d-flex align-items-center">
+              <form class="d-flex border rounded-pill shadow-sm" style="max-width: 500px; width: 100%;" method="get" action="/search">
+                  <input class="form-control border-0 rounded-pill ps-3" type="text" placeholder="Start your search" aria-label="Search" name="search">
+                  <button class="btn btn-light border-0 rounded-pill" type="submit">
+                      <i class="bi bi-search"></i>
+                  </button>
+              </form>
           </div>
-        </div>
+
+          <div class="navbar-nav ms-auto d-flex align-items-center">
+              <a class="nav-link text-dark fw-semibold me-3" href="/new/create">
+                  <i class="bi bi-plus-circle me-1"></i>Become a Host
+              </a>
+              <a class="nav-link text-dark fw-semibold me-3" href="/">
+                  <i class="bi bi-house me-1"></i>List
+              </a>
+              <a class="nav-link text-dark me-3" href="#">
+                  <i class="bi bi-globe fs-5"></i>
+              </a>
+
+              <!-- Simple Login/Logout Buttons -->
+              <div class="d-flex align-items-center">
+                <%if(!currUser){%>
+                  <a href="/user/log" class="btn btn-outline-dark rounded-pill me-2">
+                      <i class="bi bi-box-arrow-in-right me-1"></i>Login
+                  </a>
+                  <a href="/user/signup" class="btn btn-dark rounded-pill">
+                      <i class="bi bi-person-plus me-1"></i>Sign Up
+                  </a>
+                <%}%>
+                <%if(currUser){%>
+                   <a href="/user/logout" class="btn btn-dark rounded-pill">
+                    <i class="bi bi-person-plus me-1"></i>Logout
+                   </a>
+                 <%}%>
+              </div>
+          </div>
       </div>
-    </div>
-  </nav>
-  
+  </div>
+</nav>

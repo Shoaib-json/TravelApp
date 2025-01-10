@@ -8,6 +8,7 @@
         
         <div class="listing-details">
             <h1 class="listing-title"><%= lists.title %></h1>
+            <i><p class="listing-description"><%= lists.user.username %></p></i>
             <p class="listing-description"><%= lists.description %></p>
         </div>
 
@@ -16,13 +17,14 @@
             <li><%= lists.location %></li>
             <li><%= lists.country %></li>
         </ul>
-
+        <% if (currUser && currUser._id.equals(lists.user._id)) { %>
         <div class="listing-actions">
             <a href="/<%= lists._id %>/edit" class="btn btn-edit">Edit</a>
             <form method="post" action="/<%= lists._id %>/delete?_method=DELETE" class="delete-form">
                 <button type="submit" class="btn btn-delete">Delete</button>
             </form>
         </div>
+        <%}%> 
     </div>
 
     <!-- Review Form -->

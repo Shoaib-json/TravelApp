@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const List = require("../models/listing");
-const inti = require("./init.js");
+const init = require("./init.js");
 
 main().then(()=>{
     console.log("db is connected");
@@ -14,7 +14,13 @@ async function main() {
 
 const initDB = async () =>{
     await List.deleteMany({});
-    await List.insertMany(inti.init);
+    const initData = init.map((obj)=> ({
+      ...obj,
+      user : "6780964431f462711e362eeb"
+
+    }))
+
+    await List.insertMany(initData);
     console.log("data was init")
 
 }

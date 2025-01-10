@@ -1,19 +1,16 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const List = require("./models/listing");
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const ErrorH = require("./utils/error");
-const {ListSchema} = require("./utils/schema");
-const Review = require("./models/review");
-const {revSch} = require("./utils/schema");
+const User = require("./models/login.js")
 const flash = require('connect-flash');
 const session = require("express-session");
-const User = require("./models/login");
 const passport = require("passport");
 const localPass = require("passport-local").Strategy;
+
 
 
 
@@ -71,6 +68,7 @@ passport.deserializeUser(User.deserializeUser());
 app.use((req,res,next)=>{
     res.locals.success = req.flash("success");
     res.locals.Error = req.flash("Error");
+    res.locals.currUser = req.user;
     next();
 })
 
@@ -88,12 +86,10 @@ app.all("*",(req,res)=>{
 })
 
 
-app.use((err,req,res,next)=>{
-    let{status=500 , message = "not found"} = err;
+app.use((err ,req, res, next)=>{
+    let{status=404, message = "not found"} = err;
     res.render("./listing/notfound.ejs" , {message});
 })
-
-
 
 
 app.listen(8080 , (req,res)=>{

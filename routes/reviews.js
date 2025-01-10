@@ -9,11 +9,10 @@ const Review = require("../models/review");
 
 
 router.get('/favicon.ico', (req, res,next) => res.status(204).end().next());
+
 router.post("/:id/review" ,async (req,res,next)=>{
     try{
-    
     let {rating,comment} = req.body;
-    
     const q =  new Review({
         comment : comment,
         rating : rating
@@ -34,7 +33,8 @@ router.post("/:id/review" ,async (req,res,next)=>{
     }catch (err) {
         next(err)
     }
-})
+});
+
 
 router.delete("/:id/review/:reviewId",async(req,res)=>{
     try{let {id , reviewId}= req.params;
@@ -47,7 +47,12 @@ router.delete("/:id/review/:reviewId",async(req,res)=>{
     }catch (err){
         next(err)
     }
+});
 
+
+router.all("/*",(req,res)=>{
+    let  message = " Page not found"
+    res.render("./listing/notfound.ejs" , {message})
 });
 
 

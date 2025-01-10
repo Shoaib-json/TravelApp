@@ -349,4 +349,4 @@ const sampleListings = [
     },
   ];
   
-  module.exports = { init : sampleListings };
+  module.exports = sampleListings;

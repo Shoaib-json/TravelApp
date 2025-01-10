@@ -8,6 +8,7 @@ const Review = require("../models/review");
 const {revSch} = require("../utils/schema");
 const User = require("../models/login");
 const passport = require('passport');
+const {check} = require("../utils/middleware")
 
 
 
@@ -31,8 +32,8 @@ router.get('/favicon.ico', (req, res) => res.status(204).end());
 
 
 // creating new user
-router.get("/new/create",(req,res)=>{
-
+router.get("/new/create",check,(req,res)=>{
+    
     res.render("./listing/new.ejs");
 
 })
@@ -51,28 +52,24 @@ router.get("/search", async (req, res,next) => {
         const { search } = req.query;
     
         if (!search) {
-            return res.render("./listing/notfound.ejs");
+            return res.render("../listing/notfound.ejs");
         }
-
         const lists = await List.find({
             $or: [
                 { location: { $regex: search, $options: "i" } },
                 { country: { $regex: search, $options: "i" } }
             ]
         });
-
-        
         if (!lists || lists.length === 0) {
-            return res.render("./listing/notfound.ejs");
+            return res.render("../listing/notfound.ejs");
         }
-
         res.render("./listing/index.ejs", { lists });
 
     } catch (err) {
-        next( err);
-       
+        next( err);  
     }
 });
+
 router.post("/new1/submit",valList , async (req, res,next) => {
     
     try {
@@ -84,8 +81,10 @@ router.post("/new1/submit",valList , async (req, res,next) => {
             image: { filename: "image", url: image },
             location,
             country,
+            user : req.user._id
         }); 
         await lists.save();
+       
         req.flash("success" , " Place published");
         res.redirect(`/${lists._id}`); 
         console.log("Data saved:", lists);
@@ -101,14 +100,15 @@ router.get("/",async (req,res) =>{
 
 router.get("/:id", async (req,res)=>{
     let {id} = req.params;
-    const lists = await List.findById(id).populate("reviews");
+    const lists = await List.findById(id).populate("reviews").populate("user");
+    console.log(lists)
     res.render("./listing/show.ejs" , {lists});
 });
 
 
 
 
-router.get("/:id/edit", async(req,res,next)=>{
+router.get("/:id/edit", check, async(req,res,next)=>{
     try{let {id}=req.params;
     const q = await List.findById(id);
     res.render("./listing/edit.ejs",{q})
@@ -122,6 +122,11 @@ router.get("/:id/edit", async(req,res,next)=>{
 router.put("/:id/update" , valList ,async (req,res,next)=>{
     try{
     let{id} = req.params;
+    let list = await List.findById(id)
+    if(!list.user._id.equals(res.locals.currUser._id)){
+        req.flash("Error" , "You Do Not have Access");
+        res.redirect(`/${id}`);
+    }
     let {title,description,price,location,country,image} = req.body;
     let pass = req.body.pass;
 
@@ -137,8 +142,9 @@ router.put("/:id/update" , valList ,async (req,res,next)=>{
         location : location,
         country : country
     },{runValidators:true,new:true});
+    
     console.log(q);
-    let lists = q;
+    
     req.flash("success" , "place updated");
     res.redirect("/")}
     else{
@@ -152,7 +158,7 @@ router.put("/:id/update" , valList ,async (req,res,next)=>{
 
 
 // deleting the route 
-router.delete("/:id/delete", async (req,res,next)=>{
+router.delete("/:id/delete",check, async (req,res,next)=>{
 
     try{
     let {id} = req.params;
@@ -166,7 +172,7 @@ router.delete("/:id/delete", async (req,res,next)=>{
 });
 
 //review
-router.post("/:id/review" ,async (req,res,next)=>{
+router.post("/:id/review" ,check, async (req,res,next)=>{
     try{
     
     let {rating,comment} = req.body;
@@ -193,7 +199,7 @@ router.post("/:id/review" ,async (req,res,next)=>{
     });}
 })
 
-router.delete("/:id/review/:reviewId",async(req,res)=>{
+router.delete("/:id/review/:reviewId",check,async(req,res)=>{
     try{let {id , reviewId}= req.params;
     await List.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
 
@@ -204,13 +210,12 @@ router.delete("/:id/review/:reviewId",async(req,res)=>{
     }catch (err){
         next(err)
     }
+});
 
-}
-)
-
-router.all("*",(req,res)=>{
+router.all("/*",(req,res)=>{
     let  message = " Page not found"
     res.render("./listing/notfound.ejs" , {message})
 })
+
 
 module.exports = router;

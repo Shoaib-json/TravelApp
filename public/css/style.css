@@ -2,9 +2,9 @@
 body {
   font-family: 'Helvetica Neue', Arial, sans-serif;
   background-color: #f7f7f7;
+  color: #333;
   margin: 0;
   padding: 0;
-  color: #333;
   margin-top: 60px; /* Adjusted for navbar height */
 }
 
@@ -14,35 +14,57 @@ body {
   top: 0;
   left: 0;
   width: 100%;
-  background-color: #333;
-  color: white;
+  background-color: #ffffff; /* White background */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  color: #333;
   z-index: 1000;
-  padding: 10px 20px;
+  padding: 0.5rem 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  transition: all 0.3s ease;
 }
 
-.navbar .navbar-brand {
-  font-size: 1.8rem;
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.navbar-brand h4 {
+  font-family: 'Arial', sans-serif;
+  font-size: 1.5rem;
   font-weight: bold;
-  color: white;
+  margin: 0;
+  color: #007bff; /* Primary color for brand name */
+}
+
+.navbar-brand i {
+  font-size: 1.5rem;
+  color: #007bff;
+  margin-right: 0.5rem;
 }
 
 .navbar-toggler {
-  background-color: #f8f9fa;
-  border: 1px solid #ccc;
-  padding: 12px;
+  border: none;
+  background-color: transparent;
 }
 
-.navbar .nav-link {
+.navbar-toggler-icon {
+  background-color: #3498db;
+}
+
+.nav-link {
   font-size: 1rem;
   font-weight: 500;
+  color: #333;
   padding: 10px 15px;
+  transition: color 0.3s ease, transform 0.3s ease;
 }
 
 .nav-link:hover {
-  color: #007bff;
+  color: #3498db;
+  transform: translateX(5px);
 }
 
 /* Container Styling */
@@ -144,7 +166,7 @@ footer {
 
 /* Review Section Styles */
 .review-section {
-  background: white;
+  background-color: #fff;
   padding: 2rem;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -152,12 +174,14 @@ footer {
 }
 
 .review-form h2 {
-  margin: 0 0 1.5rem 0;
+  font-size: 1.8rem;
+  font-weight: 600;
   color: #2c3e50;
+  margin-bottom: 20px;
 }
 
 .form-group {
-  margin-bottom: 1.5rem;
+  margin-bottom: 20px;
 }
 
 .rating-slider {
@@ -167,20 +191,23 @@ footer {
 .review-comment {
   width: 100%;
   min-height: 100px;
-  padding: 0.5rem;
+  padding: 10px;
   border: 1px solid #ddd;
-  border-radius: 4px;
+  border-radius: 6px;
   resize: vertical;
 }
 
-/* Buttons */
+.review-comment:focus {
+  border-color: #3498db;
+  outline: none;
+}
+
 .btn {
-  padding: 0.5rem 1rem;
+  padding: 10px 20px;
   border-radius: 4px;
   border: none;
   cursor: pointer;
   font-weight: 500;
-  text-decoration: none;
   transition: background-color 0.2s;
 }
 
@@ -211,47 +238,7 @@ footer {
   background-color: #c0392b;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  .navbar {
-    padding: 15px 20px;
-  }
-
-  .container {
-    padding: 1rem;
-  }
-
-  .card {
-    width: calc(50% - 2rem);
-  }
-
-  .f-info {
-    flex-direction: column;
-    text-align: center;
-    gap: 1.5rem;
-  }
-
-  .f-info-links {
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .social {
-    margin-bottom: 1rem;
-  }
-
-  .btn {
-    width: 100%;
-    text-align: center;
-  }
-}
-
-@media (max-width: 576px) {
-  .card {
-    width: 100%;
-  }
-}
-/* Listing Container */
+/* Listing Styles */
 .listing-container {
   display: flex;
   flex-direction: column;
@@ -302,173 +289,26 @@ footer {
   margin-bottom: 20px;
 }
 
-.listing-info {
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-  list-style: none;
-  margin: 0;
-  background-color: #fff;
-  border-top: 2px solid #f1f1f1;
-}
-
-.listing-info li {
-  font-size: 1rem;
-  color: #555;
-  margin-bottom: 10px;
-}
-
-.listing-actions {
-  display: flex;
-  justify-content: space-between;
-  padding: 20px;
-  background-color: #fff;
-}
-
-.listing-actions .btn {
-  padding: 10px 20px;
-  font-size: 1rem;
-  border-radius: 5px;
-  text-decoration: none;
-  transition: background-color 0.3s ease;
-}
-
-.btn-edit {
-  background-color: #3498db;
-  color: white;
-}
-
-.btn-edit:hover {
-  background-color: #2980b9;
-}
-
-.btn-delete {
-  background-color: #e74c3c;
-  color: white;
-}
-
-.btn-delete:hover {
-  background-color: #c0392b;
-}
-
-.review-section {
-  background-color: #fff;
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 30px;
-}
-
-.review-form h2 {
-  font-size: 1.8rem;
-  font-weight: 600;
-  color: #2c3e50;
-  margin-bottom: 20px;
-}
-
-.form-group {
-  margin-bottom: 20px;
-}
-
-.rating-slider {
-  width: 100%;
-  max-width: 300px;
-  margin-top: 10px;
-}
-
-.review-comment {
-  width: 100%;
-  min-height: 100px;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  resize: vertical;
-}
-
-.review-comment:focus {
-  border-color: #3498db;
-  outline: none;
-}
-
-.btn-submit {
-  background-color: #2ecc71;
-  color: white;
-  padding: 12px 20px;
-  font-size: 1.2rem;
-}
-
-.btn-submit:hover {
-  background-color: #27ae60;
-}
-
-.reviews-list {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-.reviews-list h2 {
-  font-size: 1.6rem;
-  font-weight: 600;
-  color: #2c3e50;
-  margin-bottom: 20px;
-}
-
-.reviews-list ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.review-item {
-  border-bottom: 1px solid #f1f1f1;
-  padding: 15px 0;
-}
-
-.review-content {
-  font-size: 1rem;
-  color: #555;
-}
-
-.review-rating {
-  font-weight: bold;
-  color: #f39c12;
-}
-
-.review-comment {
-  margin-top: 10px;
-  font-size: 1rem;
-}
-
-.review-delete-form {
-  display: inline-block;
-  margin-top: 10px;
-}
-
-.btn-delete-review {
-  background-color: #e74c3c;
-  color: white;
-  padding: 8px 15px;
-  font-size: 0.9rem;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.btn-delete-review:hover {
-  background-color: #c0392b;
-}
-
-.no-reviews {
-  font-size: 1.1rem;
-  color: #7f8c8d;
-  font-style: italic;
-}
-
 /* Responsive Design */
 @media (max-width: 768px) {
+  .navbar {
+    padding: 15px 20px;
+  }
+
+  .container {
+    padding: 1rem;
+  }
+
+  .card {
+    width: calc(50% - 2rem);
+  }
+
+  .f-info {
+    flex-direction: column;
+    text-align: center;
+    gap: 1.5rem;
+  }
+
   .listing-card {
     width: 90%;
   }
@@ -477,28 +317,10 @@ footer {
     height: 300px;
   }
 
-  .listing-details {
-    padding: 15px;
-  }
-
-  .listing-info {
-    padding: 15px;
-  }
-
-  .listing-actions {
-    padding: 15px;
-  }
-
   .review-section {
-    padding: 20px;
+    padding: 1rem;
   }
 
-  .reviews-list {
-    padding: 15px;
-  }
-}
-
-@media (max-width: 576px) {
   .listing-title {
     font-size: 1.5rem;
   }
@@ -506,96 +328,33 @@ footer {
   .listing-description {
     font-size: 0.9rem;
   }
+}
 
-  .review-form h2 {
-    font-size: 1.5rem;
+/* Additional Media Queries for Small Devices */
+@media (max-width: 576px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
-  .btn-submit {
+  .navbar-brand h4 {
+    font-size: 1.2rem;
+  }
+
+  .card {
+    width: 100%;
+  }
+
+  .f-info div {
+    font-size: 0.8rem;
+  }
+
+  .social i {
     font-size: 1rem;
-    padding: 10px 18px;
   }
 
-  .btn-delete-review {
-    font-size: 0.85rem;
-    padding: 6px 12px;
+  .listing-image {
+    height: 200px;
   }
 }
-/* Navbar Styling */
-.navbar {
-  transition: all 0.3s ease;
-}
 
-.navbar-brand {
-  font-weight: 600;
-}
-
-.navbar-toggler {
-  border: none;
-  background-color: transparent;
-}
-
-.navbar-toggler-icon {
-  background-color: #3498db;
-}
-
-.nav-link {
-  font-size: 1rem;
-  font-weight: 500;
-  color: #333;
-  transition: color 0.3s ease, transform 0.3s ease;
-}
-
-.nav-link:hover {
-  color: #3498db;
-  transform: translateX(5px);
-}
-
-.navbar-nav .nav-link:focus {
-  outline: none;
-}
-
-.navbar-nav .nav-link:active {
-  color: #2980b9;
-}
-
-/* Search Bar */
-.form-control {
-  padding-left: 20px;
-  font-size: 1rem;
-  transition: box-shadow 0.3s ease;
-}
-
-.form-control:focus {
-  box-shadow: 0 0 8px rgba(52, 152, 219, 0.6);
-}
-
-.btn-light {
-  background-color: transparent;
-  padding: 8px 15px;
-}
-
-.btn-light:hover {
-  background-color: #3498db;
-  color: white;
-  transition: background-color 0.3s ease;
-}
-
-.bi-search {
-  color: #3498db;
-}
-
-/* Mobile responsiveness */
-@media (max-width: 768px) {
-  .navbar-nav {
-    margin-top: 10px;
-  }
-
-  .nav-link {
-    font-size: 0.9rem;
-  }
-
-  .navbar-toggler-icon {
-    background-color: #3498db;
-  }
-}
