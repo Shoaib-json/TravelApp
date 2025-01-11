@@ -8,26 +8,11 @@ const Review = require("../models/review");
 const {revSch} = require("../utils/schema");
 const User = require("../models/login");
 const passport = require('passport');
-const {check} = require("../utils/middleware")
+const {check, isOwner , valList} = require("../utils/middleware")
 
 
 
-const valList = (req, res, next) => {
-    const listingData = {
-        listing: {
-            ...req.body,    
-            price: parseInt(req.body.price, 10)
-        }
-    };
-    let { error } = ListSchema.validate(listingData);
-    console.log(error);
 
-    if(error) {
-        throw new ErrorH(400, error);
-    } else {
-        next();
-    }
-};
 router.get('/favicon.ico', (req, res) => res.status(204).end());
 
 
@@ -100,7 +85,12 @@ router.get("/",async (req,res) =>{
 
 router.get("/:id", async (req,res)=>{
     let {id} = req.params;
-    const lists = await List.findById(id).populate("reviews").populate("user");
+    const lists = await List.findById(id)
+    .populate({
+        path : "reviews",
+        populate:
+        {path : "user"},})
+    .populate("user");
     console.log(lists)
     res.render("./listing/show.ejs" , {lists});
 });
@@ -122,11 +112,7 @@ router.get("/:id/edit", check, async(req,res,next)=>{
 router.put("/:id/update" , valList ,async (req,res,next)=>{
     try{
     let{id} = req.params;
-    let list = await List.findById(id)
-    if(!list.user._id.equals(res.locals.currUser._id)){
-        req.flash("Error" , "You Do Not have Access");
-        res.redirect(`/${id}`);
-    }
+     
     let {title,description,price,location,country,image} = req.body;
     let pass = req.body.pass;
 

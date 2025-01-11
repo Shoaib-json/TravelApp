@@ -45,16 +45,17 @@ router.get("/log",(req,res,next)=>{
 router.post(
     "/login",saveRedirectUrl,
     passport.authenticate("local", {
-        failureRedirect: "/log", // Redirect to '/log' if authentication fails
+        failureRedirect: "/user/log", // Redirect to '/log' if authentication fails
         failureFlash: true, // Enable flash messages on failure
         // successRedirect: "/", // Redirect to '/' on successful login
         failureMessage: true, // Provide a failure message
     }),
-    async (req, res) => {
+    async (req, res, next) => {
         
         req.flash("Error", "You are logged in"); // Flash a custom error message
         let redirect = res.locals.redirectUrl || "/";
         res.redirect(redirect ); // Redirect after setting the flash message
+        
     }
 );
 

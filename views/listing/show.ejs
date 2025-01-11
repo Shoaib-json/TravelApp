@@ -28,6 +28,7 @@
     </div>
 
     <!-- Review Form -->
+    <% if (currUser) { %>
     <div class="review-section">
         <form method="post" action="/re/<%= lists._id %>/review" class="review-form">
             <h2>Leave a Review</h2>
@@ -46,14 +47,16 @@
             <button type="submit" class="btn btn-submit">Submit Review</button>
         </form>
     </div>
-
+    <%}%> 
     <!-- Reviews List -->
     <div class="reviews-list">
         <h2>Reviews</h2>
         <% if (lists.reviews && lists.reviews.length > 0) { %>
             <ul>
+                
                 <% for (let review of lists.reviews) { %>
                     <li class="review-item">
+                        <strong><%= review.user.username %></strong>
                         <div class="review-content">
                             <div class="review-rating">Rating: <%= review.rating %> ★</div>
                             <div class="review-comment">Comment: <%= review.comment %></div>

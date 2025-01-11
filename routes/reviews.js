@@ -6,16 +6,17 @@ const path = require("path");
 const methodOverride = require("method-override");
 const List = require("../models/listing");
 const Review = require("../models/review");
-
+const {check,saveRedirectUrl , isReviewOwner} = require("../utils/middleware");
 
 router.get('/favicon.ico', (req, res,next) => res.status(204).end().next());
 
-router.post("/:id/review" ,async (req,res,next)=>{
+router.post("/:id/review" , check ,async (req,res,next)=>{
     try{
     let {rating,comment} = req.body;
     const q =  new Review({
         comment : comment,
-        rating : rating
+        rating : rating,
+        user : req.user._id
     });
     await q.save();
     let lists = await List.findById(req.params.id);
@@ -36,7 +37,7 @@ router.post("/:id/review" ,async (req,res,next)=>{
 });
 
 
-router.delete("/:id/review/:reviewId",async(req,res)=>{
+router.delete("/:id/review/:reviewId",check,isReviewOwner,async(req,res)=>{
     try{let {id , reviewId}= req.params;
     await List.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
 

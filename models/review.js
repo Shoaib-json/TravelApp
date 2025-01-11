@@ -10,7 +10,11 @@ const revSch = new mongoose.Schema({
     created :{
         type : Date,
         default : Date.now()
-    }
+    },
+    user:{
+            type : mongoose.Schema.Types.ObjectId,
+            ref : "User"
+        }
 });
 
 module.exports = mongoose.model("Review", revSch);
