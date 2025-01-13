@@ -2,10 +2,8 @@ const express = require('express');
 const router = express.Router();
 const User = require("../models/login");
 const passport = require('passport');
-const {check,saveRedirectUrl } = require("../utils/middleware")
-
-
-
+const {check,saveRedirectUrl } = require("../utils/middleware");
+const { logIn , signIn , logOut } = require('../controllers/login');
 
 
 
@@ -15,28 +13,7 @@ router.get("/signup",(req,res)=>{
     res.render("./listing/sign.ejs")
 });
 
-router.post("/sign",async  (req,res,next)=>{
-    try{
-    let { email,username,password} = req.body;
-    let user1 = new User({
-        email : email,
-        username : username
-    });
-    let Q =await User.register(user1,password);
-    req.login(Q,(err)=>{
-        if(err){
-            next(err)
-        }else{
-            req.flash("success", "welcome to TripTale");
-            console.log(Q);
-            res.redirect("/")}
-
-    })
-    
-    }catch(err) {
-        next(err)
-    }
-});
+router.post("/sign", signIn);
 
 router.get("/log",(req,res,next)=>{
     res.render("./listing/login.ejs")
@@ -50,29 +27,12 @@ router.post(
         // successRedirect: "/", // Redirect to '/' on successful login
         failureMessage: true, // Provide a failure message
     }),
-    async (req, res, next) => {
-        
-        req.flash("Error", "You are logged in"); // Flash a custom error message
-        let redirect = res.locals.redirectUrl || "/";
-        res.redirect(redirect ); // Redirect after setting the flash message
-        
-    }
+    logIn
 );
 
-router.get("/logout", (req, res, next) => {
-    req.logout((err) => {
-        if (err) {
-            return next(err);
-        }
-        req.flash("Error", "You are loggedOut");
-        res.redirect("/");
-    });
-});
+router.get("/logout", logOut);
 
-router.all("/*",(req,res)=>{
-    let  message = " Page not found"
-    res.render("./listing/notfound.ejs" , {message})
-});
+
 
 
 module.exports = router;

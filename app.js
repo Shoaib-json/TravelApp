@@ -16,7 +16,7 @@ const localPass = require("passport-local").Strategy;
 
 const pist = require("./routes/list.js");
 const review = require("./routes/reviews.js");
-const user = require("./routes/login.js")
+const user = require("./routes/login.js");
  
 
 
