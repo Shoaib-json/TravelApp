@@ -96,10 +96,7 @@ The following environment variables can be configured:
 4. Push to the branch: `git push origin feature-name`
 5. Submit a Pull Request
 
-## License
-
-[Add your license information here]
 
 ## Contact
 
-[Add your contact information here]
+shoaibkhan1504@gmail.com
