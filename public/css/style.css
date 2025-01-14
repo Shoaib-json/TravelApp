@@ -1,11 +1,12 @@
 /* Base Styles */
 body {
-  font-family: 'Helvetica Neue', Arial, sans-serif;
-  background-color: #f7f7f7;
-  color: #333;
+  font-family: 'Roboto', sans-serif; /* Modern, clean font */
+  background-color: #f4f4f4;
+  color: #444;
   margin: 0;
   padding: 0;
   margin-top: 60px; /* Adjusted for navbar height */
+  line-height: 1.6;
 }
 
 /* Navbar Styles */
@@ -15,10 +16,10 @@ body {
   left: 0;
   width: 100%;
   background-color: #ffffff; /* White background */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   color: #333;
   z-index: 1000;
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -32,16 +33,15 @@ body {
 }
 
 .navbar-brand h4 {
-  font-family: 'Arial', sans-serif;
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   font-weight: bold;
   margin: 0;
-  color: #007bff; /* Primary color for brand name */
+  color: #3498db; /* Eye-catching brand color */
 }
 
 .navbar-brand i {
-  font-size: 1.5rem;
-  color: #007bff;
+  font-size: 1.8rem;
+  color: #3498db;
   margin-right: 0.5rem;
 }
 
@@ -57,14 +57,15 @@ body {
 .nav-link {
   font-size: 1rem;
   font-weight: 500;
-  color: #333;
+  color: #555;
   padding: 10px 15px;
+  text-decoration: none;
   transition: color 0.3s ease, transform 0.3s ease;
 }
 
 .nav-link:hover {
-  color: #3498db;
-  transform: translateX(5px);
+  color: #1abc9c;
+  transform: translateY(-2px);
 }
 
 /* Container Styling */
@@ -73,54 +74,56 @@ body {
   flex-wrap: wrap;
   justify-content: center;
   padding: 20px;
-  gap: 1rem;
-  background-color: #f8f9fa;
+  gap: 1.5rem;
+  background-color: #f9fafb;
   min-height: calc(100vh - 80px); /* Adjust for fixed navbar */
 }
 
 .card {
   width: 100%;
-  max-width: 600px;
-  background-color: #fff;
-  border-radius: 15px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   margin: 10px;
+  overflow: hidden;
 }
 
 .card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
 
 .card-img-top {
   width: 100%;
-  height: 200px;
+  height: 180px;
   object-fit: cover;
 }
 
 .card-body {
-  padding: 1.25rem;
+  padding: 1.5rem;
 }
 
 .card-title {
-  font-size: 1.25rem;
+  font-size: 1.3rem;
   font-weight: 600;
-  color: #2d3436;
-  margin-bottom: 0.75rem;
+  color: #2c3e50;
+  margin-bottom: 1rem;
 }
 
 .card-text {
-  color: #636e72;
-  font-size: 0.95rem;
-  margin-bottom: 0.75rem;
+  color: #7f8c8d;
+  font-size: 1rem;
+  margin-bottom: 1rem;
 }
 
 /* Footer Styles */
 footer {
-  background-color: #f7f7f7;
-  padding: 2rem 0;
+  background-color: #ffffff;
+  padding: 2rem 1rem;
   margin-top: 2rem;
+  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .f-info {
@@ -131,22 +134,21 @@ footer {
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
-  padding: 1rem;
 }
 
 .f-info div {
-  color: #222;
+  color: #555;
   font-size: 0.9rem;
 }
 
 .f-info-links a {
-  color: #222;
+  color: #555;
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
 .f-info-links a:hover {
-  color: #ff385c;
+  color: #3498db;
 }
 
 .social {
@@ -155,21 +157,21 @@ footer {
 }
 
 .social i {
-  font-size: 1.2rem;
-  cursor: pointer;
+  font-size: 1.4rem;
+  color: #555;
   transition: color 0.2s ease;
 }
 
 .social i:hover {
-  color: #ff385c;
+  color: #1abc9c;
 }
 
 /* Review Section Styles */
 .review-section {
-  background-color: #fff;
+  background-color: #ffffff;
   padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   margin-bottom: 2rem;
 }
 
@@ -177,11 +179,11 @@ footer {
   font-size: 1.8rem;
   font-weight: 600;
   color: #2c3e50;
-  margin-bottom: 20px;
+  margin-bottom: 1rem;
 }
 
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 1.5rem;
 }
 
 .rating-slider {
@@ -190,8 +192,8 @@ footer {
 
 .review-comment {
   width: 100%;
-  min-height: 100px;
-  padding: 10px;
+  min-height: 120px;
+  padding: 12px;
   border: 1px solid #ddd;
   border-radius: 6px;
   resize: vertical;
@@ -203,12 +205,12 @@ footer {
 }
 
 .btn {
-  padding: 10px 20px;
-  border-radius: 4px;
+  padding: 12px 24px;
+  border-radius: 6px;
   border: none;
   cursor: pointer;
-  font-weight: 500;
-  transition: background-color 0.2s;
+  font-weight: 600;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
 .btn-submit {
@@ -218,6 +220,7 @@ footer {
 
 .btn-submit:hover {
   background-color: #27ae60;
+  transform: translateY(-2px);
 }
 
 .btn-edit {
@@ -227,6 +230,7 @@ footer {
 
 .btn-edit:hover {
   background-color: #2980b9;
+  transform: translateY(-2px);
 }
 
 .btn-delete {
@@ -236,6 +240,7 @@ footer {
 
 .btn-delete:hover {
   background-color: #c0392b;
+  transform: translateY(-2px);
 }
 
 /* Listing Styles */
@@ -248,11 +253,11 @@ footer {
 }
 
 .listing-card {
-  background-color: white;
+  background-color: #ffffff;
   width: 100%;
   max-width: 800px;
-  border-radius: 12px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   margin-bottom: 20px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -260,47 +265,43 @@ footer {
 
 .listing-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 .listing-image {
   width: 100%;
-  height: 400px;
+  height: 300px;
   object-fit: cover;
   border-bottom: 4px solid #f1f1f1;
 }
 
 .listing-details {
   padding: 20px;
-  background-color: #fafafa;
+  background-color: #f9f9f9;
 }
 
 .listing-title {
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: 600;
-  color: #333;
+  color: #2d3436;
   margin: 0 0 10px;
 }
 
 .listing-description {
   font-size: 1rem;
-  color: #555;
-  line-height: 1.6;
+  color: #7f8c8d;
+  line-height: 1.8;
   margin-bottom: 20px;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .navbar {
-    padding: 15px 20px;
-  }
-
   .container {
     padding: 1rem;
   }
 
   .card {
-    width: calc(50% - 2rem);
+    width: calc(50% - 1.5rem);
   }
 
   .f-info {
@@ -310,51 +311,38 @@ footer {
   }
 
   .listing-card {
-    width: 90%;
+    width: 100%;
   }
 
   .listing-image {
-    height: 300px;
+    height: 250px;
   }
 
   .review-section {
-    padding: 1rem;
+    padding: 1.5rem;
   }
 
   .listing-title {
     font-size: 1.5rem;
   }
-
-  .listing-description {
-    font-size: 0.9rem;
-  }
 }
 
-/* Additional Media Queries for Small Devices */
 @media (max-width: 576px) {
   .navbar {
     flex-direction: column;
     align-items: flex-start;
+    padding: 1rem;
   }
 
   .navbar-brand h4 {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
   }
 
   .card {
     width: 100%;
   }
 
-  .f-info div {
-    font-size: 0.8rem;
-  }
-
-  .social i {
-    font-size: 1rem;
-  }
-
   .listing-image {
     height: 200px;
   }
 }
-

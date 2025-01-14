@@ -11,7 +11,7 @@ const {addReview,deleteReview } = require("../controllers/review")
 
 router.get('/favicon.ico', (req, res,next) => res.status(204).end().next());
 
-router.post("/:id/review" , check ,addReview);
+router.post("/:id/review" , check , addReview );
 
 
 router.delete("/:id/review/:reviewId",check,isReviewOwner,deleteReview );

@@ -1,6 +1,6 @@
 <!-- views/lists/show.ejs -->
 <% layout("layouts/boilerplate") %>
-
+<body>
 <div class="listing-container">
     
     <div class="listing-card">
@@ -35,8 +35,14 @@
             
             <div class="form-group">
                 <label for="rating">Rating</label>
-                <input type="range" min="1" max="5" name="rating" id="rating" class="rating-slider">
-                <div class="rating-value"></div>
+                <div class="rating-group" id="rating">
+                    <span class="rating-star" data-value="1">★</span>
+                    <span class="rating-star" data-value="2">★</span>
+                    <span class="rating-star" data-value="3">★</span>
+                    <span class="rating-star" data-value="4">★</span>
+                    <span class="rating-star" data-value="5">★</span>
+                </div>
+                <input type="hidden" name="rating" id="rating-value" required>
             </div>
 
             <div class="form-group">
@@ -72,3 +78,35 @@
         <% } %>
     </div>
 </div>
+
+<script>
+// Rating interactivity
+const stars = document.querySelectorAll('.rating-star');
+const ratingValue = document.getElementById('rating-value');
+
+stars.forEach((star, index) => {
+  star.addEventListener('click', () => {
+    // Set active class on clicked star and update hidden input
+    stars.forEach((s, i) => {
+      s.classList.toggle('active', i <= index);
+    });
+    ratingValue.value = index + 1;
+  });
+
+  star.addEventListener('mouseover', () => {
+    // Temporary hover effect
+    stars.forEach((s, i) => {
+      s.style.color = i <= index ? '#ffc107' : '#ddd';
+    });
+  });
+
+  star.addEventListener('mouseout', () => {
+    // Revert to current active state
+    stars.forEach((s) => {
+      s.style.color = s.classList.contains('active') ? '#ff3366' : '#ddd';
+    });
+  });
+});
+</script>
+
+</body>

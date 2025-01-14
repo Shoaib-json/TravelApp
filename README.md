@@ -1,130 +1,105 @@
-# TripTale
+# TravelApp
 
-TripTale is a modern property rental platform that connects travelers with unique accommodations worldwide. Built with Node.js and MongoDB, it offers a seamless experience for both hosts and travelers.
-
-## Overview
-
-TripTale enables property owners to list their spaces and travelers to discover and book unique accommodations. The platform features robust search capabilities, a review system, and secure user authentication.
-
-## Core Features
-
-### For Travelers
-- Advanced property search with location filters
-- Detailed property listings with high-resolution images
-- Verified user reviews and ratings
-- Secure authentication system
-
-### For Hosts
-- Intuitive listing management
-- Property details customization
-- Review management tools
-- Analytics dashboard
+A web application built with Node.js and Express that provides user authentication and travel-related features.
 
 ## Technology Stack
 
-- **Backend**: Node.js, Express.js
-- **Database**: MongoDB with Mongoose ODM
-- **Frontend**: EJS, Bootstrap
-- **Validation**: Custom schema validation
-
-## API Documentation
-
-### Authentication
-```http
-POST /auth/register
-POST /auth/login
-```
-
-### Properties
-```http
-GET    /listings          # Get all listings
-GET    /listings/:id      # Get specific listing
-POST   /listings         # Create listing
-PUT    /listings/:id     # Update listing
-DELETE /listings/:id     # Delete listing
-```
-
-### Reviews
-```http
-POST   /listings/:id/reviews    # Add review
-DELETE /listings/:id/reviews    # Remove review
-```
-
-## Installation
-
-1. **Clone the repository**
-```bash
-git clone https://github.com/yourusername/triptale.git
-cd triptale
-```
-
-2. **Install dependencies**
-```bash
-npm install
-```
-
-3. **Configure environment**
-```bash
-cp .env.example .env
-# Edit .env with your configuration
-```
-
-4. **Start the application**
-```bash
-npm run dev     # Development
-npm start       # Production
-```
+- **Backend:** Node.js, Express
+- **Database:** MongoDB
+- **Template Engine:** EJS
+- **Authentication:** Passport.js
+- **Session Management:** express-session
+- **Other Tools:** 
+  - method-override
+  - connect-flash
+  - ejs-mate
 
 ## Project Structure
 
+```
 TRAVELAPP/
-├── init/
+├── controllers/        # Route controllers
+│   ├── list.js
+│   ├── login.js
+│   └── review.js
+├── init/              # Initialization scripts
 │   ├── index.js
 │   └── init.js
-├── models/
+├── models/            # Database models
 │   ├── listing.js
 │   ├── login.js
 │   └── review.js
-├── utils/
+├── public/           
+│   └── css/          # Stylesheets
+├── routes/           # Route definitions
+│   ├── list.js
+│   ├── login.js
+│   └── reviews.js
+├── utils/            # Utility functions
 │   ├── error.js
+│   ├── middleware.js
 │   └── schema.js
-├── views/
-├── public/
-│   └── css/
-│       └── style.css
-└── app.js
+├── views/            # EJS templates
+│   ├── includes/
+│   ├── layouts/
+│   └── listing/
+├── app.js            # Application entry point
+└── package.json      # Project dependencies
 ```
+
+## Setup Instructions
+
+1. Clone the repository:
+   ```bash
+   git clone [repository-url]
+   cd TravelApp
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Configure MongoDB:
+   - Ensure MongoDB is installed and running
+   - Default connection string: `mongodb://127.0.0.1:27017/reuse`
+
+4. Start the application:
+   ```bash
+   node app.js
+   ```
+   The server will start on port 8080.
+
+## Features
+
+- User authentication with Passport.js
+- Session management
+- Flash messages for user feedback
+- RESTful routing
+- MVC architecture
+- Static file serving
+- Method override support
+- EJS templating with EJS-Mate
+
+## Environment Variables
+
+The following environment variables can be configured:
+- `PORT` (default: 8080)
+- `SESSION_SECRET` (default: "truck")
+- `MONGODB_URI` (default: "mongodb://127.0.0.1:27017/reuse")
 
 ## Contributing
 
 1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## Development Roadmap
-
-### Phase 1 - Q1 2024
-- [x] User authentication
-- [x] Property listings
-- [x] Search functionality
-- [x] Review system
-
-### Phase 2 - Q2 2024
-- [ ] Payment integration
-- [ ] Host dashboard
-- [ ] Booking system
-- [ ] Enhanced search filters
-
-## Support
-
-For support, please email support@triptale.com or open an issue in the GitHub repository.
-
-## Security
-
-Found a security vulnerability? Please email security@triptale.com instead of opening a public issue.
+2. Create a feature branch: `git checkout -b feature-name`
+3. Commit changes: `git commit -am 'Add feature'`
+4. Push to the branch: `git push origin feature-name`
+5. Submit a Pull Request
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+[Add your license information here]
+
+## Contact
+
+[Add your contact information here]
