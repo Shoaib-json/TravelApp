@@ -54,6 +54,7 @@ module.exports.createList = async (req, res, next) => {
         
         console.log("Data saved:", lists);
     } catch (err) {
+        console.log(err)
         next(err);
     }
 }

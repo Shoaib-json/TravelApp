@@ -11,10 +11,7 @@ const session = require("express-session");
 const passport = require("passport");
 const localPass = require("passport-local").Strategy;
 
-
-if(process.env.NODE_ENV != "production"){
-    require('dotenv').config();
-}
+require('dotenv').config();
 
 // console.log(process.env.SECRET);
 
