@@ -4,12 +4,12 @@ A web application built with Node.js and Express that provides user authenticati
 
 ## Technology Stack
 
-- **Backend:** Node.js, Express
-- **Database:** MongoDB
-- **Template Engine:** EJS
-- **Authentication:** Passport.js
-- **Session Management:** express-session
-- **Other Tools:** 
+- Backend: Node.js, Express
+- Database: MongoDB
+- Template Engine: EJS
+- Authentication: Passport.js
+- Session Management:  express-session
+- Other Tools: 
   - method-override
   - connect-flash
   - ejs-mate

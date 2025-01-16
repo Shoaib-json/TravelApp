@@ -26,28 +26,39 @@ module.exports.search =async (req, res,next) => {
     }
 }
 
-module.exports.createList = async (req, res,next) => {
-    
+module.exports.createList = async (req, res, next) => {
     try {
-        const { title, price, location, country, description, image} = req.body;
+        let url = req.file.path;
+        let filename = req.file.filename;
+        console.log(url, "    ", filename);
+
+        const { title, price, location, country, description, image } = req.body;
+        
         const lists = new List({
             title,
             description,
-            price : parseInt(req.body.price, 10) ,
-            image: { filename: "image", url: image },
+            price: parseInt(req.body.price, 10),
+            image: { 
+                filename: filename, 
+                url: url 
+            },
             location,
             country,
-            user : req.user._id
-        }); 
+            user: req.user._id
+        });
+
         await lists.save();
-       
-        req.flash("success" , " Place published");
-        res.redirect(`/${lists._id}`); 
+        
+        req.flash("success", "Place published");
+        res.redirect(`/${lists._id}`);
+        
         console.log("Data saved:", lists);
     } catch (err) {
         next(err);
     }
 }
+
+
 
 module.exports.index = async (req,res) =>{
     const lists = await List.find();

@@ -9,16 +9,17 @@ const {revSch} = require("../utils/schema");
 const User = require("../models/login");
 const passport = require('passport');
 const {check, isOwner , valList} = require("../utils/middleware");
-const{newForm,search,createList,index , showRoute , editPage , updateRoute , destroyRoute} = require("../controllers/list.js")
-
-
+const{newForm,search,createList,index , showRoute , editPage , updateRoute , destroyRoute} = require("../controllers/list.js");
+const multer  = require('multer');
+const {storage} = require("../cloudConfig.js"); 
+const upload = multer({ storage });
 
 
 router.get('/favicon.ico', (req, res) => res.status(204).end());
 
 
 // creating new user
-router.get("/new/create",check,newForm)
+router.get("/new/create",check, newForm)
 
 
 router.get("/privacy",(req,res) =>{
@@ -31,7 +32,7 @@ router.get("/terms",(req,res) =>{
 
 router.get("/search",search);
 
-router.post("/new1/submit",valList , createList);
+router.post("/new1/submit" ,upload.single('image'), createList);
 
 router.get("/",index);
 

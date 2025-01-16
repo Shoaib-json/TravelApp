@@ -1,11 +1,15 @@
 <% layout("layouts/boilerplate") -%>
 <body>
 
-    <form method="post" action="/new1/submit"  >
-        <div class="mb-3"  >
+    <form method="post" action="/new1/submit" enctype ="multipart/form-data" >
+        <!-- <div class="mb-3"  >
             <label for="fileInput">Put the ImageUrl</label>
             <input type="text" id="fileInput" name="image" placeholder="Enter the ImageUrl" required>
-        </div>
+        </div> -->
+        <div class="mb-3"  >
+          <label for="fileInput">Put the ImageUrl</label>
+          <input type="file" id="fileInput" name="image" placeholder="Enter the ImageUrl" required>
+      </div>
         <div class="col-md-6 col-12">
           <label for="inputEmail4" class="form-label">Title</label> 
           <input  class="form-control" id="inputEmail4"   name = "title" placeholder="Enter the Title" required>
