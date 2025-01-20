@@ -1,12 +1,10 @@
 <% layout("/layouts/boilerplate") -%>
 <body>
-
-
-    <form method="post" action="/<%=q._id%>/update?_method=PUT"  >
-        <div class="mb-3"  >
-            <label for="fileInput">Put the ImageUrl</label>
-            <input type="text" id="fileInput" name="image" value="<%=q.image.url%>">
-        </div>
+    <form method="post" action="/<%=q._id%>/update?_method=PUT"  enctype="multipart/form-data">
+      <div class="mb-3"  >
+        <label for="fileInput">Put the Image</label>
+        <input type="file" id="fileInput" name="image" placeholder="Enter the ImageUrl" required>
+    </div>
         <div class="col-md-6 col-12">
           <label for="inputEmail4" class="form-label">Title</label> 
           <input  class="form-control" id="inputEmail4"  value="<%=q.title%>" name = "title">

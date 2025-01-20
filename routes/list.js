@@ -32,9 +32,9 @@ router.get("/terms",(req,res) =>{
 
 router.get("/search",search);
 
-router.post("/new1/submit" ,upload.single('image'), createList);
+router.post("/new1/submit" , upload.single('image'), createList);
 
-router.get("/",index);
+router.get("/", index);
 
 router.get("/:id",showRoute);
 
@@ -44,7 +44,7 @@ router.get("/:id",showRoute);
 router.get("/:id/edit", check, editPage);
 
 
-router.put("/:id/update" , valList ,updateRoute );
+router.put("/:id/update" ,upload.single('image'), updateRoute );
 
 
 // deleting the route 

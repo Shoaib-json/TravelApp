@@ -89,37 +89,52 @@ module.exports.editPage = async(req,res,next)=>{
 };
 
 
-module.exports.updateRoute = async (req,res,next)=>{
-    try{
-    let{id} = req.params;
-     
-    let {title,description,price,location,country,image} = req.body;
-    let pass = req.body.pass;
-
-    if(pass == "admin"){
-    let q = await List.findByIdAndUpdate(id,{
-        title: title,
-        price : price,
-        image : {
-            filename : 'image456',
-            url : image
-        },
-        description : description,
-        location : location,
-        country : country
-    },{runValidators:true,new:true});
-    
-    console.log(q);
-    
-    req.flash("success" , "place updated");
-    res.redirect("/")}
-    else{
-        res.render("./listing/notfound.ejs")
+module.exports.updateRoute = async (req, res, next) => {
+    try {
+        let { id } = req.params;
+        
+        // Extract other fields from req.body
+        const { title, description, location, country } = req.body;
+        
+        if (typeof req.file !== "undefined") {
+            // Case: New file is uploaded
+            let url = req.file.path;
+            let filename = req.file.filename;
+            
+            let q = await List.findByIdAndUpdate(id, {
+                title,
+                description,
+                price: parseInt(req.body.price, 10),
+                image: {
+                    filename: filename,
+                    url: url
+                },
+                location,
+                country
+            }, { runValidators: true, new: true });
+            
+            await q.save();
+            console.log(q);
+            req.flash("success", "place updated");
+            return res.redirect("/");  // Add return here
+        } else {
+            // Case: No new file uploaded, update without changing image
+            let q = await List.findByIdAndUpdate(id, {
+                title,
+                description,
+                price: parseInt(req.body.price, 10),
+                location,
+                country
+            }, { runValidators: true, new: true });
+            
+            await q.save();
+            req.flash("success", "place updated");
+            return res.redirect("/");
+        }
+    } catch (err) {
+        next(err);
     }
-    }catch(err){
-        next(err)
-    }
-}
+};
 
 module.exports.destroyRoute =async (req,res,next)=>{
 
