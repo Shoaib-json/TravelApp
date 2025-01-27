@@ -17,6 +17,12 @@
             <li><%= lists.location %></li>
             <li><%= lists.country %></li>
         </ul>
+
+        <!-- Map Section -->
+        <div class="map-container" style="width: 100%; height: 400px;">
+            <div id="map" style="width: 100%; height: 100%;"></div>
+        </div>
+
         <% if (currUser && currUser._id.equals(lists.user._id)) { %>
         <div class="listing-actions">
             <a href="/<%= lists._id %>/edit" class="btn btn-edit">Edit</a>
@@ -54,12 +60,12 @@
         </form>
     </div>
     <%}%> 
+
     <!-- Reviews List -->
     <div class="reviews-list">
         <h2>Reviews</h2>
         <% if (lists.reviews && lists.reviews.length > 0) { %>
             <ul>
-                
                 <% for (let review of lists.reviews) { %>
                     <li class="review-item">
                         <strong><%= review.user.username %></strong>
@@ -67,9 +73,11 @@
                             <div class="review-rating">Rating: <%= review.rating %> ★</div>
                             <div class="review-comment">Comment: <%= review.comment %></div>
                         </div>
+                        <% if (currUser && currUser._id.equals(review.user._id)) { %>
                         <form method="POST" action="/re/<%= lists._id %>/review/<%= review._id %>?_method=DELETE" class="review-delete-form">
                             <button type="submit" class="btn btn-delete-review">Delete Review</button>
                         </form>
+                        <% } %>
                     </li>
                 <% } %>
             </ul>
@@ -79,34 +87,42 @@
     </div>
 </div>
 
+<!-- Leaflet CSS and JS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
 <script>
-// Rating interactivity
-const stars = document.querySelectorAll('.rating-star');
-const ratingValue = document.getElementById('rating-value');
+document.addEventListener('DOMContentLoaded', async () => {
+  try {
+    const apiKey = '<%=apiKey%>';
+    const address = '<%= lists.location %>, <%= lists.country %>';
+    const encodedAddress = encodeURIComponent(address);
+    const geocodingUrl = `https://api.geoapify.com/v1/geocode/search?text=${encodedAddress}&apiKey=${apiKey}`;
 
-stars.forEach((star, index) => {
-  star.addEventListener('click', () => {
-    // Set active class on clicked star and update hidden input
-    stars.forEach((s, i) => {
-      s.classList.toggle('active', i <= index);
-    });
-    ratingValue.value = index + 1;
-  });
+    const response = await axios.get(geocodingUrl);
+    
+    if (response.data.features && response.data.features.length > 0) {
+      const [longitude, latitude] = response.data.features[0].geometry.coordinates;
+      
+      const map = L.map('map').setView([latitude, longitude], 13);
 
-  star.addEventListener('mouseover', () => {
-    // Temporary hover effect
-    stars.forEach((s, i) => {
-      s.style.color = i <= index ? '#ffc107' : '#ddd';
-    });
-  });
+      L.tileLayer(`https://maps.geoapify.com/v1/tile/carto/{z}/{x}/{y}.png?&apiKey=<%=apiKey%>`, {
+        attribution: 'Powered by <a href="https://www.geoapify.com/" target="_blank">Geoapify</a>',
+        maxZoom: 20
+      }).addTo(map);
 
-  star.addEventListener('mouseout', () => {
-    // Revert to current active state
-    stars.forEach((s) => {
-      s.style.color = s.classList.contains('active') ? '#ff3366' : '#ddd';
-    });
-  });
+      L.marker([latitude, longitude])
+        .addTo(map)
+        .bindPopup('<%= lists.title %>')
+        .openPopup();
+    } else {
+      document.getElementById('map').innerHTML = 'Location not found';
+    }
+  } catch (error) {
+    console.error('Error fetching coordinates:', error);
+    document.getElementById('map').innerHTML = 'Unable to load map';
+  }
 });
 </script>
-
 </body>

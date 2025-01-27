@@ -75,7 +75,7 @@ module.exports.showRoute= async (req,res)=>{
         {path : "user"},})
     .populate("user");
     console.log(lists)
-    res.render("./listing/show.ejs" , {lists});
+    res.render("./listing/show.ejs" , {lists, apiKey: process.env.MAP_API_KEY});
 }
 
 module.exports.editPage = async(req,res,next)=>{
