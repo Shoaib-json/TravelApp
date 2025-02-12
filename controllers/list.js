@@ -118,7 +118,7 @@ module.exports.updateRoute = async (req, res, next) => {
             req.flash("success", "place updated");
             return res.redirect("/");  // Add return here
         } else {
-            // Case: No new file uploaded, update without changing image
+            
             let q = await List.findByIdAndUpdate(id, {
                 title,
                 description,

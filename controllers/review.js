@@ -21,7 +21,7 @@ module.exports.addReview = async (req,res,next)=>{
     console.log(q);
     req.flash("success" , "Review Created");
     res.redirect(`/${req.params.id}`);
-    // res.render("./listing/show.ejs",{lists})
+    res.render("./listing/show.ejs",{lists})
 
     }catch (err) {
         next(err)
