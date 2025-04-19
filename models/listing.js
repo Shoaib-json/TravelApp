@@ -33,6 +33,13 @@ const ListSchema = new mongoose.Schema({
     user:{
         type : mongoose.Schema.Types.ObjectId,
         ref : "User"
+    },
+    bookedBy :{
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "User"
+    },
+    bookedOn:{
+        type : Date
     }
 });
 
