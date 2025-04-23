@@ -95,7 +95,7 @@ app.use((err ,req, res, next)=>{
 
 
 app.listen(3000 , (req,res)=>{
-    console.log("post is listening");
+    console.log("port is listening");
 })
 
 

@@ -37,16 +37,8 @@ router.post("/new1/submit" , upload.single('image'), createList);
 router.get("/", index);
 
 router.post("/:id/book", check, async (req, res) => {
-    const { bookedOn } = req.body;
-    const listingId = req.params.id;
-  
-    let q = await List.findByIdAndUpdate(listingId, {
-      bookedBy: req.user._id,
-      bookedOn: bookedOn
-    });
-  
-    console.log(q);
-    res.redirect("/");
+   req.flash("success", "Booking Successfull");
+   res.redirect("/");
   });
   
 
